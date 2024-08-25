@@ -423,6 +423,9 @@ pub fn (mut f Gen) stmt(node ast.Stmt) {
 		ast.ComptimeFor {
 			f.comptime_for(node)
 		}
+		ast.ComptimeBreak {
+			f.comptime_break(node)
+		}
 		ast.ConstDecl {
 			f.const_decl(node)
 		}
@@ -778,8 +781,13 @@ pub fn (mut f Gen) comptime_for(node ast.ComptimeFor) {
 	if node.stmts.len > 0 || node.pos.line_nr < node.pos.last_line {
 		f.writeln('')
 		f.stmts(node.stmts)
+		f.writeln('__after_for:') // support $break
 	}
 	f.writeln('}')
+}
+
+pub fn (mut f Gen) comptime_break(node ast.ComptimeBreak) {
+	f.writeln('goto __after_for') // label added by comptime_for
 }
 
 struct ConstAlignInfo {

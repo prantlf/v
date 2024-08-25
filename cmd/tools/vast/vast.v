@@ -421,6 +421,7 @@ fn (t Tree) stmt(node ast.Stmt) &Node {
 		ast.InterfaceDecl { return t.interface_decl(node) }
 		ast.HashStmt { return t.hash_stmt(node) }
 		ast.ComptimeFor { return t.comptime_for(node) }
+		ast.ComptimeBreak { return t.comptime_break(node) }
 		ast.GlobalDecl { return t.global_decl(node) }
 		ast.DeferStmt { return t.defer_stmt(node) }
 		ast.TypeDecl { return t.type_decl(node) }
@@ -760,6 +761,13 @@ fn (t Tree) comptime_for(node ast.ComptimeFor) &Node {
 	obj.add('pos', t.pos(node.pos))
 	obj.add('typ_pos', t.pos(node.pos))
 	obj.add_terse('stmts', t.array_node_stmt(node.stmts))
+	return obj
+}
+
+fn (t Tree) comptime_break(node ast.ComptimeBreak) &Node {
+	mut obj := new_object()
+	obj.add_terse('ast_type', t.string_node('ComptimeBreak'))
+	obj.add('pos', t.pos(node.pos))
 	return obj
 }
 

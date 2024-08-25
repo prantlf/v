@@ -421,6 +421,17 @@ fn (mut p Parser) comptime_for() ast.ComptimeFor {
 	}
 }
 
+fn (mut p Parser) comptime_break() ast.ComptimeBreak {
+	// p.comptime_break() handles this special statement:
+	// `$break`
+	p.next()
+	p.check(.key_break)
+	spos := p.tok.pos()
+	return ast.ComptimeBreak{
+		pos: spos.extend(p.tok.pos())
+	}
+}
+
 // @FN, @STRUCT, @MOD etc. See full list in token.valid_at_tokens
 fn (mut p Parser) at() ast.AtExpr {
 	name := p.tok.lit

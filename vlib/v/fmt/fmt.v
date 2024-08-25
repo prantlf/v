@@ -531,6 +531,9 @@ pub fn (mut f Fmt) stmt(node ast.Stmt) {
 		ast.ComptimeFor {
 			f.comptime_for(node)
 		}
+		ast.ComptimeBreak {
+			f.comptime_break(node)
+		}
 		ast.ConstDecl {
 			f.const_decl(node)
 		}
@@ -922,8 +925,13 @@ pub fn (mut f Fmt) comptime_for(node ast.ComptimeFor) {
 	if node.stmts.len > 0 || node.pos.line_nr < node.pos.last_line {
 		f.writeln('')
 		f.stmts(node.stmts)
+		f.writeln('__after_for:') // support $break
 	}
 	f.writeln('}')
+}
+
+pub fn (mut f Fmt) comptime_break(node ast.ComptimeBreak) {
+	f.write('\$break')
 }
 
 pub fn (mut f Fmt) const_decl(node ast.ConstDecl) {

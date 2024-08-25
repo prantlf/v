@@ -23,6 +23,16 @@ fn comptime_for() {
 	}
 }
 
+fn comptime_for_with_break() {
+	println(@FN)
+	$for method in App.methods {
+		if method.name == 'two' {
+			$break
+		}
+		println('  method: ${method.name} | ${method}')
+	}
+}
+
 fn comptime_for_with_if() {
 	println(@FN)
 	$for method in App.methods {

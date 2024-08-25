@@ -1004,8 +1004,13 @@ fn (mut g Gen) comptime_for(node ast.ComptimeFor) {
 			g.pop_comptime_info()
 		}
 	}
+	g.writeln('__after_for:') // support $break
 	g.indent--
 	g.writeln('}// \$for')
+}
+
+fn (mut g Gen) comptime_break(node ast.ComptimeBreak) {
+	g.writeln('goto __after_for;') // label added by comptime_for
 }
 
 fn (mut g Gen) comptime_if_to_ifdef(name string, is_comptime_option bool) !string {

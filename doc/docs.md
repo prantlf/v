@@ -5968,6 +5968,29 @@ fn main() {
 // test2 returns string: foo
 ```
 
+#### <h4 id="$break">$break</h4>
+
+You can skip remaining iterations of the `$for` loop by `$break`.
+
+```v
+struct User {
+	name string
+	age  int
+}
+
+fn main() {
+	$for field in User.fields {
+		println('${field.name}')
+		if field.name == 'name' {
+			$break // stop printing all fields after `name`
+		}
+	}
+}
+
+// Output:
+// name
+```
+
 See [`examples/compiletime/reflection.v`](/examples/compiletime/reflection.v)
 for a more complete example.
 

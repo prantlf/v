@@ -2093,6 +2093,9 @@ fn (mut c Checker) stmt(mut node ast.Stmt) {
 		ast.ComptimeFor {
 			c.comptime_for(mut node)
 		}
+		ast.ComptimeBreak {
+			c.comptime_break(mut node)
+		}
 		ast.ConstDecl {
 			c.inside_const = true
 			c.const_decl(mut node)

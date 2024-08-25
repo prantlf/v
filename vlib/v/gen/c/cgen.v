@@ -2193,6 +2193,9 @@ fn (mut g Gen) stmt(node ast.Stmt) {
 		ast.ComptimeFor {
 			g.comptime_for(node)
 		}
+		ast.ComptimeBreak {
+			g.comptime_break(node)
+		}
 		ast.DebuggerStmt {
 			g.debugger_stmt(node)
 		}

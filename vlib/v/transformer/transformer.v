@@ -210,6 +210,7 @@ pub fn (mut t Transformer) stmt(mut node ast.Stmt) ast.Stmt {
 				stmt = t.stmt(mut stmt)
 			}
 		}
+		ast.ComptimeBreak {}
 		ast.ConstDecl {
 			for mut field in node.fields {
 				field.expr = t.expr(mut field.expr)

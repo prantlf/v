@@ -81,6 +81,7 @@ pub type Stmt = AsmStmt
 	| Block
 	| BranchStmt
 	| ComptimeFor
+	| ComptimeBreak
 	| ConstDecl
 	| DebuggerStmt
 	| DeferStmt
@@ -1257,6 +1258,11 @@ pub mut:
 	expr  Expr
 }
 
+pub struct ComptimeBreak {
+pub:
+	pos token.Pos
+}
+
 pub struct ForStmt {
 pub:
 	is_inf   bool // `for {}`
@@ -2393,6 +2399,7 @@ pub fn (node Node) children() []Node {
 			Block, DeferStmt, ForCStmt, ForInStmt, ForStmt, ComptimeFor {
 				return node.stmts.map(Node(it))
 			}
+			ComptimeBreak {}
 			ExprStmt, AssertStmt {
 				children << node.expr
 			}

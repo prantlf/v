@@ -144,6 +144,7 @@ pub fn (mut w Walker) stmt(node_ ast.Stmt) {
 		ast.ComptimeFor {
 			w.stmts(node.stmts)
 		}
+		ast.ComptimeBreak {}
 		ast.ConstDecl {
 			w.const_fields(node.fields)
 		}

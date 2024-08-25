@@ -354,6 +354,9 @@ fn (mut c Checker) comptime_for(mut node ast.ComptimeFor) {
 	}
 }
 
+fn (mut c Checker) comptime_break(mut node ast.ComptimeBreak) {
+}
+
 // comptime const eval
 fn (mut c Checker) eval_comptime_const_expr(expr ast.Expr, nlevel int) ?ast.ComptTimeConstValue {
 	if nlevel > 100 {

@@ -46,6 +46,23 @@ fn test_comptime_for() {
 	}
 }
 
+fn test_comptime_for_with_break() {
+	println(@FN)
+	methods := ['one', 'two']
+	mut counter := 0
+	$for method in App.methods {
+		// leave the loop as soons the second method encountered
+		if method.name == 'two' {
+			$break
+		}
+		x := '  method: ${method.name} | ' + no_lines('${method}')
+		println(x)
+		assert method.name == 'one'
+		counter++
+	}
+	assert counter == 1
+}
+
 fn test_comptime_for_with_if() {
 	println(@FN)
 	mut methods_found := map[string]int{}

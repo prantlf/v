@@ -768,6 +768,9 @@ fn (mut p Parser) top_stmt() ast.Stmt {
 				if p.peek_tok.kind == .key_for {
 					comptime_for_stmt := p.comptime_for()
 					return p.other_stmts(comptime_for_stmt)
+				} else if p.peek_tok.kind == .key_break {
+					comptime_break_stmt := p.comptime_break()
+					return p.other_stmts(comptime_break_stmt)
 				} else if p.peek_tok.kind == .key_if {
 					if_expr := p.if_expr(true)
 					cur_stmt := ast.ExprStmt{
@@ -1051,6 +1054,9 @@ fn (mut p Parser) stmt(is_top_level bool) ast.Stmt {
 				}
 				.key_for {
 					return p.comptime_for()
+				}
+				.key_break {
+					return p.comptime_break()
 				}
 				.name {
 					// handles $dbg directly without registering token
